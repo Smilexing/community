@@ -28,6 +28,7 @@ public class MapperTests {
     @Test
     public void testSelectUser() {
         User user = userMapper.selectById(101);
+
         System.out.println(user);
 
         user = userMapper.selectByName("liubei");
