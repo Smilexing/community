@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,12 +68,14 @@ public class MapperTests {
 
     @Test
     public void testSelectPosts() {
-        List<DiscussPost> list = discussPostMapper.selectDiscussPosts(149, 0, 10);
-        for(DiscussPost post : list) {
-            System.out.println(post);
+        // 展示前10条数据，按照时间、精华（type）排序
+        List<DiscussPost> discussPostList = discussPostMapper.selectDiscussPosts(0, 0, 10);
+        for (DiscussPost discussPost : discussPostList) {
+            System.out.println(discussPost);
         }
 
-        int rows = discussPostMapper.selectDiscussPostRows(149);
+        // 测试拿到数据的总数
+        int rows = discussPostMapper.selectDiscussPostRows(0);
         System.out.println(rows);
     }
 
