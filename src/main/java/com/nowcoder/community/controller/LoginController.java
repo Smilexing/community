@@ -1,9 +1,12 @@
 package com.nowcoder.community.controller;
 
+import com.google.code.kaptcha.Producer;
 import com.nowcoder.community.constant.ActivationCode;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
 /**
@@ -27,6 +35,10 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private Producer kapatchaProducer;
+
+    public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     /**
      * 返回到注册页面
@@ -93,9 +105,31 @@ public class LoginController {
         return "/site/operate-result";
     }
 
-    // @RequestMapping(path = "/code", method = RequestMethod.GET)
-    // public
-    //
+    /**
+     * 获取图形验证码并存入session中返回给用户
+     * @param response
+     */
+
+    @RequestMapping(path = "kaptcha", method = RequestMethod.GET)
+    public void getKaptcha(HttpServletResponse response, HttpSession session) {
+    //     生成验证码
+        String text = kapatchaProducer.createText();
+        BufferedImage image = kapatchaProducer.createImage(text);
+
+    //     将验证码存入到session中
+        session.setAttribute("kaptcha", text);
+
+    //     将图片输出给游览器
+        response.setContentType("image/png");
+        try{
+            OutputStream os = response.getOutputStream();
+            ImageIO.write(image, "png", os);
+        } catch (IOException e) {
+            logger.error("响应验证码失败:" + e.getMessage());
+        }
+    }
+
+
     // @RequestMapping(path = "/login", method = RequestMethod.POST)
     // public String userLoginPage(String username, String password, String code, boolean remberme
     //         , Model model, HttpSession session, HttpServletRequest request) {
