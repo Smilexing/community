@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -38,12 +41,14 @@ public class LoginController {
 
     /**
      * 返回到登录页面
+     *
      * @return
      */
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String getLoginPage() {
         return "/site/login";
     }
+
     /**
      * 注册用户
      *
@@ -87,4 +92,14 @@ public class LoginController {
         }
         return "/site/operate-result";
     }
+
+    // @RequestMapping(path = "/code", method = RequestMethod.GET)
+    // public
+    //
+    // @RequestMapping(path = "/login", method = RequestMethod.POST)
+    // public String userLoginPage(String username, String password, String code, boolean remberme
+    //         , Model model, HttpSession session, HttpServletRequest request) {
+    //
+    //     // 判断优先级-验证码
+    // }
 }
