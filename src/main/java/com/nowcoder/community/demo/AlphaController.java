@@ -172,6 +172,7 @@ public class AlphaController {
 
     // session示例
 
+    // localhost:8080/community/alpha/session/set
     @RequestMapping(path = "/session/set", method = RequestMethod.GET)
     @ResponseBody
     public String setSession(HttpSession session) {

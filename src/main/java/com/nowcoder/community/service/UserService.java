@@ -1,6 +1,6 @@
 package com.nowcoder.community.service;
 
-import com.nowcoder.community.constant.ActivationCode;
+import com.nowcoder.community.constant.CommunityConstant;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.LoginTicket;
@@ -116,17 +116,18 @@ public class UserService {
     public int acvtivation(int userid, String code) {
         User user = userMapper.selectById(userid);
         if (user.getStatus() == 1) {
-            return ActivationCode.ACTIVATION_REPEAT;
+            return CommunityConstant.ACTIVATION_REPEAT;
         } else if (user.getActivationCode().equals(code)) {
-            return ActivationCode.ACTIVATION_SUCCESS;
+            return CommunityConstant.ACTIVATION_SUCCESS;
         }
-        return ActivationCode.ACTIVATION_FAILURE;
+        return CommunityConstant.ACTIVATION_FAILURE;
     }
 
     /**
      * 登录功能
-     *
-     * @param loginTicket
+     * @param username
+     * @param password
+     * @param expireSeconds
      * @return
      */
     public Map<String, Object> login(String username, String password, int expireSeconds) {
@@ -171,5 +172,9 @@ public class UserService {
         return map;
         }
 
+    public void logout(String ticket) {
+        loginTicketMapper.updateTicket(ticket, 1);
+
+    }
 
 }
