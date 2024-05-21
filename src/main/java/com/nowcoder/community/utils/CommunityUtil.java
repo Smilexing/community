@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * @author Tom Smile
  * @version 1.0
- * @description: TODO
+ * @description: 常用工具类
  * @date 2024/5/19 12:24
  */
 
