@@ -1,6 +1,7 @@
-package com.nowcoder.community.demo;
+package com.nowcoder.community.demo.controller;
 
 
+import com.nowcoder.community.demo.service.AlphaService;
 import com.nowcoder.community.utils.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
