@@ -174,7 +174,15 @@ public class UserService {
 
     public void logout(String ticket) {
         loginTicketMapper.updateTicket(ticket, 1);
+    }
 
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+
+    public void updateHeader(int userId, String headUrl) {
+        userMapper.updateHeader(userId, headUrl);
     }
 
 }
