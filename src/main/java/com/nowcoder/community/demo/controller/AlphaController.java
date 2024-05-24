@@ -190,4 +190,19 @@ public class AlphaController {
         return "get session";
     }
 
+    /**
+     * 接受前端异步请求，返回响应（static->html-ajax-demo)
+     * @param name
+     * @param age
+     * @return
+     */
+
+    // 访问路径：http://localhost:8080/community/html/ajax-demo.html
+    @RequestMapping(path = "/ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public String testAjax(String name, int age) {
+        System.out.println(name);
+        System.out.println(age);
+        return CommunityUtil.getJSONString(0, "操作成功!");
+    }
 }
